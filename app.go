@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/hacksoc-manchester/www/handlers"
+	"github.com/MisterDoom/www/handlers"
 )
 
 func main() {

@@ -23,7 +23,7 @@ If you choose to ignore these optional prerequisites, certain parts of the websi
 #### Download the Package
 Install the package to your [$GOPATH](http://code.google.com/p/go-wiki/wiki/GOPATH "GOPATH") using the [go tool](http://golang.org/cmd/go/ "go command") from the command line:
 ```bash
-$ go get github.com/hacksoc-manchester/www
+$ go get github.com/MisterDoom/www
 ```
 Make sure [Git is installed](http://git-scm.com/downloads) on your machine and referenced by your system's ```PATH```.
 
@@ -42,14 +42,14 @@ export SENDGRID_API_KEY="your SendGrid API key"
 Windows - Add the same environment variables as above. Check [here](http://www.computerhope.com/issues/ch000549.htm) for help.
 
 #### Starting the Website
-Go to the ```hacksoc-manchester/www``` folder and run the following go command in your shell:
+Go to the ```MisterDoom/www``` folder and run the following go command in your shell:
 ```bash
 $ go run app.go
 ```
 
 ### Running Tests
 
-Go to the ```hacksoc-manchester/www``` folder and run the following go command in your shell to run the predefined tests:
+Go to the ```MisterDoom/www``` folder and run the following go command in your shell to run the predefined tests:
 ```bash
 $ go test ./...
 ```

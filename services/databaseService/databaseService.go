@@ -7,7 +7,7 @@ import (
 	"os"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/hacksoc-manchester/www/helpers/validator"
+	"github.com/MisterDoom/www/helpers/validator"
 )
 
 // UserEntry is a row from the "User" table.

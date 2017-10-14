@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/hacksoc-manchester/www/helpers/rand"
+	"github.com/MisterDoom/www/helpers/rand"
 )
 
 type testCase struct {

@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/hacksoc-manchester/www/helpers/validator"
-	"github.com/hacksoc-manchester/www/services/emailService"
+	"github.com/MisterDoom/www/helpers/validator"
+	"github.com/MisterDoom/www/services/emailService"
 )
 
 func contact(w http.ResponseWriter, r *http.Request) {

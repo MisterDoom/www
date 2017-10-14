@@ -4,7 +4,7 @@ import (
 	"errors"
 	"os"
 
-	"github.com/hacksoc-manchester/www/helpers/validator"
+	"github.com/MisterDoom/www/helpers/validator"
 	"github.com/sendgrid/sendgrid-go"
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
 )
