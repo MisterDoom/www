@@ -114,6 +114,7 @@ func Execute(templateDirectory string) error {
 	http.HandleFunc("/gallery", gallery)
 	http.HandleFunc("/partners", partners)
 	http.HandleFunc("/sign-up", signUp)
+	http.HandleFunc("/login", login)
 	http.HandleFunc("/contact", contact)
 	http.HandleFunc("/unsubscribe", unsubscribe)
 

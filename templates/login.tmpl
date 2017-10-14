@@ -1,0 +1,46 @@
+{{ define "head" }}
+  <title>Login | HackSoc</title>
+  <link rel="stylesheet" type="text/css" href="assets/css/login.min.css" />
+{{ end }}
+
+
+{{ define "scripts" }}
+  <script src="https://www.google.com/recaptcha/api.js"></script>
+  <script>
+    function toggleCheckbox(id) {
+      var checkbox = document.getElementById(id);
+      checkbox.checked = !checkbox.checked;
+    }
+  </script>
+{{ end }}
+
+
+{{ define "content" }}
+  <section id="">
+    <h1>Login</h1>
+    <div class="login-form">
+      <form method="post" action="login">
+        <div class="user-details">
+          <div class="user-email">
+            <input type="text" name="email" placeholder="Your Email">
+            <input type="password" name="password" placeholder="Password">
+          </div>
+        </div>
+        <div class="checkboxes">
+          <div class="checkbox" onclick="toggleCheckbox('remember-me-checkbox')">
+            <input id="remember-me-checkbox" type="checkbox" name="subscribe-to-events" checked onclick="toggleCheckbox('remember-me-checkbox')">
+            <div>Remember me</div>
+          </div>
+        </div>
+        <div class="actions">
+          <div class="g-recaptcha" data-sitekey="{{ . }}"></div>
+          <ul>
+            <li>
+              <input class="submit-button" type="submit" value="Login">
+            </li>
+          </ul>
+        </div>
+      </form>
+    </div>
+  </section>
+{{ end }}
