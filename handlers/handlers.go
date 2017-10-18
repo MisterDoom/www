@@ -107,10 +107,11 @@ func Execute(templateDirectory string) error {
 	}
 
 	// Configure the routes.
+
 	http.HandleFunc("/", index)
 	http.HandleFunc("/robots.txt", robots)
 	http.HandleFunc("/events", events)
-	http.HandleFunc("/team", team)
+	http.HandleFunc("/team", validate(team))
 	http.HandleFunc("/gallery", gallery)
 	http.HandleFunc("/partners", partners)
 	http.HandleFunc("/sign-up", signUp)

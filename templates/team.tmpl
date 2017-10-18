@@ -5,7 +5,11 @@
 
 
 {{ define "content" }}
+
+
   <section id="team">
+  <p>Welcome {{ .User.Email }}!</p>
+  
     <h1>Team</h1>
     <div class="members">
       {{ range .Current }}

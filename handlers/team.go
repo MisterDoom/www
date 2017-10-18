@@ -17,6 +17,7 @@ type member struct {
 var members struct {
 	Current []member
 	Past    []member
+	User    Claims
 }
 
 func init() {
@@ -31,5 +32,10 @@ func init() {
 }
 
 func team(w http.ResponseWriter, r *http.Request) {
+
+	user := r.Context().Value("user").(Claims)
+
+	members.User = user
+
 	templates["team"].ExecuteTemplate(w, "layout", &members)
 }
