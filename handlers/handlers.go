@@ -90,7 +90,7 @@ func renderTemplate(w http.ResponseWriter, r *http.Request, name string, data in
 	if userData := r.Context().Value("user"); userData != nil {
 		user = userData.(*User)
 	} else {
-		user = &User { LoggedIn: false}
+		user = &User{LoggedIn: false}
 	}
 
 	obj := make(map[string]interface{})
@@ -105,6 +105,7 @@ func renderTemplate(w http.ResponseWriter, r *http.Request, name string, data in
 
 	templates[name].ExecuteTemplate(w, "layout", obj)
 }
+
 // Execute loads templates from the specified directory and configures routes.
 func Execute(templateDirectory string) error {
 	if _, err := os.Stat(templateDirectory); err != nil {
@@ -141,6 +142,7 @@ func Execute(templateDirectory string) error {
 	handleFunc("/partners", partners)
 	handleFunc("/sign-up", signUp)
 	handleFunc("/login", login)
+	handleFunc("/logout", logout)
 	handleFunc("/contact", contact)
 	handleFunc("/unsubscribe", unsubscribe)
 
