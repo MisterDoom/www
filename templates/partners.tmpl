@@ -8,7 +8,7 @@
   <section id="partners">
     <h1>Partners</h1>
     <div class="sponsors">
-      {{ range . }}
+      {{ range .Context }}
         {{ if .Description }}
           <p>{{ .Description }}</p>
         {{ end }}

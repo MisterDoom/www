@@ -15,6 +15,11 @@ type Claims struct {
 	jwt.StandardClaims
 }
 
+type User struct {
+	Email string `json:"email"`
+	LoggedIn bool `json:"loggedIn"`
+}
+
 func setToken(w http.ResponseWriter, r *http.Request) {
 	expireToken := time.Now().Add(time.Hour * 1).Unix()
 	expireCookie := time.Now().Add(time.Hour * 1)
@@ -42,45 +47,60 @@ func setToken(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", 307)
 }
 
-// Middleware to protect private pages
-func validate(protectedPage func(http.ResponseWriter, *http.Request)) http.HandlerFunc {
-	return http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+func authMiddleware(page func(http.ResponseWriter, *http.Request)) http.HandlerFunc {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		user := &User {
+			Email: "",
+			LoggedIn: false,
+		}
 
-		// If no Auth cookie is set then return a 404 not found
-		cookie, err := req.Cookie("Auth")
+		defer func() {
+			ctx := context.WithValue(r.Context(), "user", user)
+			page(w, r.WithContext(ctx))
+		}()
+
+		cookie, err := r.Cookie("Auth")
 		if err != nil {
-			http.NotFound(res, req)
 			return
 		}
 
-		// Return a Token using the cookie
 		token, err := jwt.ParseWithClaims(cookie.Value, &Claims{}, func(token *jwt.Token) (interface{}, error) {
-			// Make sure token's signature wasn't changed
 			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 				return nil, fmt.Errorf("Unexpected siging method")
 			}
 			return []byte("secret"), nil
 		})
 		if err != nil {
-			http.NotFound(res, req)
 			return
 		}
 
 		// Grab the tokens claims and pass it into the original request
-		if claims, ok := token.Claims.(*Claims); ok && token.Valid {
-			ctx := context.WithValue(req.Context(), "user", *claims)
-			protectedPage(res, req.WithContext(ctx))
+		if claims2, ok := token.Claims.(*Claims); ok && token.Valid {
+			user = &User{Email:claims2.Email, LoggedIn:true}
 		} else {
-			http.NotFound(res, req)
 			return
 		}
+	})
+}
+// Middleware to protect private pages
+func validate(protectedPage func(http.ResponseWriter, *http.Request)) http.HandlerFunc {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		user := r.Context().Value("user").(*User)
+
+		if user.LoggedIn {
+			protectedPage(w, r)
+		} else {
+			renderTemplate(w, r, "message", messageModel{Title:"Authorization error", Message:"You are not authorized to access this page."})
+		}
+
+		return
 	})
 }
 
 func login(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
-		templates["login"].ExecuteTemplate(w, "layout", reCaptchaSiteKey)
+		renderTemplate(w, r, "login", reCaptchaSiteKey)
 
 	case "POST":
 		setToken(w, r)

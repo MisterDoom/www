@@ -1,5 +1,8 @@
 {{ define "layout" }}
-  <!doctype html>
+
+  {{ $context := .Context }}
+  {{ $user := .User }}
+   <!doctype html>
   <html>
     <head>
       <meta charset="utf-8" />

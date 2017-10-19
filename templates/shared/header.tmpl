@@ -5,8 +5,13 @@
       <li><a href="/team">Team</a></li>
       <li><a href="/gallery">Gallery</a></li>
       <li><a href="/partners">Partners</a></li>
-      <li><a href="/login">Login</a></li>      
+
+      {{if .User.LoggedIn }}
+      <li><a href="/logout">Logout</a></li>
+      {{else}}
+      <li><a href="/login">Login</a></li>
       <li><a href="/sign-up">Sign Up</a></li>
+      {{end}}
       <li><a href="/contact">Contact</a></li>
     </ul>
   </nav>

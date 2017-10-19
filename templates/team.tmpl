@@ -9,10 +9,10 @@
 
   <section id="team">
   <p>Welcome {{ .User.Email }}!</p>
-  
+
     <h1>Team</h1>
     <div class="members">
-      {{ range .Current }}
+      {{ range .Context.Current }}
         <div class="member" style="background-image: url('assets/images/team/{{ .ID }}.small.jpg')">
           <div>
             <h2>{{ .Name }}</h2>
@@ -24,7 +24,7 @@
     <div class="separator"></div>
     <h1>Hall of Fame</h1>
     <div class="members">
-      {{ range .Past }}
+      {{ range .Context.Past }}
         <div class="member" style="background-image: url('assets/images/team/{{ .ID }}.small.jpg')">
           <div>
             <h2>{{ .Name }}</h2>

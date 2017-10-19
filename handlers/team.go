@@ -33,9 +33,9 @@ func init() {
 
 func team(w http.ResponseWriter, r *http.Request) {
 
-	user := r.Context().Value("user").(Claims)
+	//user := r.Context().Value("user").(Claims)
+	//
+	//members.User = user
 
-	members.User = user
-
-	templates["team"].ExecuteTemplate(w, "layout", &members)
+	renderTemplate(w, r, "team", members)
 }

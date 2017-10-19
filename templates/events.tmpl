@@ -8,7 +8,7 @@
   <section id="events">
     <h1>Events</h1>
     <ul>
-      {{ range . }}
+      {{ range .Context }}
         {{ if .Upcoming }}<li class="upcoming">{{ else }}<li>{{ end }}
           <a class="event" href="{{ .URL }}">
             <img src="{{ .ImageURL }}">

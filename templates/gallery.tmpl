@@ -8,7 +8,7 @@
   <section id="gallery">
     <h1>Gallery</h1>
     <div class="galleries">
-      {{ range . }}
+      {{ range .Context }}
         <a href="{{ .Link }}" target="_blank">
           <div class="gallery" style="background-image: url('{{ .ImageURL }}')">
             <div>

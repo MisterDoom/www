@@ -50,11 +50,11 @@
     <h1>HackSoc</h1>
     <h2>Student-led Tech Society</h2>
     
-    {{ if .HasUpcomingEvent }}
-      <a href="{{ .Event.URL }}">
-        {{ .Event.Name }}
+    {{ if .Context.HasUpcomingEvent }}
+      <a href="{{ .Context.Event.URL }}">
+        {{ .Context.Event.Name }}
         <br>
-        {{ .Event.Date }}
+        {{ .Context.Event.Date }}
       </a>
     {{ end }}
   </header>

@@ -83,6 +83,28 @@ func minifyCSSFiles(templateDirectory string) {
 	}
 }
 
+func renderTemplate(w http.ResponseWriter, r *http.Request, name string, data interface{}) {
+
+	var user *User
+
+	if userData := r.Context().Value("user"); userData != nil {
+		user = userData.(*User)
+	} else {
+		user = &User { LoggedIn: false}
+	}
+
+	obj := make(map[string]interface{})
+
+	obj["User"] = user
+	obj["Context"] = data
+	//
+	//obj["User"] = user
+	//for key, value := range data.(map[string]interface{}) {
+	//	obj[key] = value
+	//}
+
+	templates[name].ExecuteTemplate(w, "layout", obj)
+}
 // Execute loads templates from the specified directory and configures routes.
 func Execute(templateDirectory string) error {
 	if _, err := os.Stat(templateDirectory); err != nil {
@@ -108,16 +130,19 @@ func Execute(templateDirectory string) error {
 
 	// Configure the routes.
 
-	http.HandleFunc("/", index)
-	http.HandleFunc("/robots.txt", robots)
-	http.HandleFunc("/events", events)
-	http.HandleFunc("/team", validate(team))
-	http.HandleFunc("/gallery", gallery)
-	http.HandleFunc("/partners", partners)
-	http.HandleFunc("/sign-up", signUp)
-	http.HandleFunc("/login", login)
-	http.HandleFunc("/contact", contact)
-	http.HandleFunc("/unsubscribe", unsubscribe)
+	handleFunc := func(pattern string, handler http.HandlerFunc) {
+		http.HandleFunc(pattern, authMiddleware(handler))
+	}
+	handleFunc("/", index)
+	handleFunc("/robots.txt", robots)
+	handleFunc("/events", events)
+	handleFunc("/team", validate(team))
+	handleFunc("/gallery", gallery)
+	handleFunc("/partners", partners)
+	handleFunc("/sign-up", signUp)
+	handleFunc("/login", login)
+	handleFunc("/contact", contact)
+	handleFunc("/unsubscribe", unsubscribe)
 
 	return nil
 }
